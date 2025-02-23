@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Contract</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #dc3545;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .container {
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        button, a {
+            padding: 10px 20px;
+            margin: 5px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        button {
+            background-color: #007bff;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .cancel {
+            background-color: #dc3545;
+        }
+        .cancel:hover {
+            background-color: #b02a37;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Delete Contract</h1>
+    </header>
+
+    <div class="container">
+        <p>Are you sure you want to delete "{{ contract.name }}"?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Yes</button>
+            <a href="{% url 'contract_list' %}" class="cancel">No</a>
+        </form>
+    </div>
+</body>
+</html>

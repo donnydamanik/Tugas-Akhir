@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contract List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .alert {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .alert.urgent {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .alert.upcoming {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .no-data {
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Contract Management System</h1>
+    </header>
+
+    <div class="container">
+        <!-- Notifikasi -->
+        {% if urgent_contracts %}
+            <div class="alert urgent">
+                <strong>Urgent Contracts:</strong>
+                <ul>
+                    {% for contract in urgent_contracts %}
+                        <li>{{ contract.name }} (Ends on {{ contract.end_date }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if upcoming_contracts %}
+            <div class="alert upcoming">
+                <strong>Upcoming Contracts:</strong>
+                <ul>
+                    {% for contract in upcoming_contracts %}
+                        <li>{{ contract.name }} (Ends on {{ contract.end_date }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <!-- Tombol Tambah Kontrak -->
+        <a href="{% url 'contract_create' %}" class="button">+ Add New Contract</a>
+
+        <!-- Tabel Kontrak -->
+        {% if contracts %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contract in contracts %}
+                    <tr>
+                        <td>{{ contract.name }}</td>
+                        <td>{{ contract.description }}</td>
+                        <td>{{ contract.start_date }}</td>
+                        <td>{{ contract.end_date }}</td>
+                        <td>
+                            <a href="{% url 'contract_update' contract.id %}" class="button">Edit</a>
+                            <a href="{% url 'contract_delete' contract.id %}" class="button" style="background-color: #dc3545;">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-data">No contracts available. Add one now!</p>
+        {% endif %}
+    </div>
+</body>
+</html>
